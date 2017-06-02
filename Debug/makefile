@@ -8,8 +8,8 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
--include src/ServerStateDisplay/subdir.mk
--include src/subdir.mk
+-include Main/ServerStateDisplay/subdir.mk
+-include Main/subdir.mk
 -include subdir.mk
 -include objects.mk
 
@@ -26,11 +26,11 @@ endif
 ifneq ($(strip $(CXX_DEPS)),)
 -include $(CXX_DEPS)
 endif
-ifneq ($(strip $(CPP_DEPS)),)
--include $(CPP_DEPS)
-endif
 ifneq ($(strip $(C_DEPS)),)
 -include $(C_DEPS)
+endif
+ifneq ($(strip $(CPP_DEPS)),)
+-include $(CPP_DEPS)
 endif
 endif
 
@@ -39,19 +39,19 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: GameServer
+all: Server
 
 # Tool invocations
-GameServer: $(OBJS) $(USER_OBJS)
+Server: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
-	@echo 'Invoking: GCC C++ Linker'
-	g++ -pthread -std=c++11 -o "GameServer" $(OBJS) $(USER_OBJS) $(LIBS)
+	@echo 'Invoking: Cross G++ Linker'
+	g++ -pthread -std=c++11 -o "Server" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(CC_DEPS)$(C++_DEPS)$(EXECUTABLES)$(C_UPPER_DEPS)$(CXX_DEPS)$(OBJS)$(CPP_DEPS)$(C_DEPS) GameServer
+	-$(RM) $(CC_DEPS)$(C++_DEPS)$(EXECUTABLES)$(OBJS)$(C_UPPER_DEPS)$(CXX_DEPS)$(C_DEPS)$(CPP_DEPS) Server
 	-@echo ' '
 
 .PHONY: all clean dependents

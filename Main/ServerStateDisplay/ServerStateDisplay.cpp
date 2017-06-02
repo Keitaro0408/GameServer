@@ -38,7 +38,7 @@ void ServerStateDisplay::Loop()
 		printf("+------------+\n");
 
 		printf(" ID = %d \n",m_PlayerData.Id);
-		printf(" X = %f \n", m_PlayerData.PosX);
-		printf(" Y = %f \n", m_PlayerData.PosY);
+		printf("  X = %f \n", m_PlayerData.PosX);
+		printf("  Y = %f \n", m_PlayerData.PosY);
 	}
 }

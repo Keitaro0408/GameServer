@@ -5,7 +5,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "ServerStateDisplay/ServerStateDisplay.h"
-#include <thread>
+
 
 enum KEYSTATE
 {
