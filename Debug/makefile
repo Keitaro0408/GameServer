@@ -8,7 +8,11 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
--include Main/ServerStateDisplay/subdir.mk
+-include Main/SceneManager/SceneFactory/subdir.mk
+-include Main/SceneManager/SceneBase/WaitScene/subdir.mk
+-include Main/SceneManager/SceneBase/GameScene/ServerStateDisplay/subdir.mk
+-include Main/SceneManager/SceneBase/GameScene/subdir.mk
+-include Main/SceneManager/subdir.mk
 -include Main/subdir.mk
 -include subdir.mk
 -include objects.mk

@@ -33,7 +33,7 @@
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.542035931" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker"/>
 							<tool command="g++" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GLDErrorParser" id="cdt.managedbuild.tool.gnu.cross.cpp.linker.197096741" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker">
-								<option id="gnu.cpp.link.option.flags.1397220763" superClass="gnu.cpp.link.option.flags" value="-pthread -std=c++11" valueType="string"/>
+								<option id="gnu.cpp.link.option.flags.1397220763" name="リンカー・フラグ" superClass="gnu.cpp.link.option.flags" value="-pthread -std=c++11" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1042533916" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -46,9 +46,14 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="ServerStateDisplay|Main" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
-						<entry excluding="ServerStateDisplay" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main/ServerStateDisplay"/>
+						<entry excluding="GameScene|WaitScene|SceneBase|SceneFactory|SceneManager|ServerStateDisplay|Main" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="SceneManager|ServerStateDisplay" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main"/>
+						<entry excluding="SceneBase|SceneFactory" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main/SceneManager"/>
+						<entry excluding="GameScene|WaitScene" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main/SceneManager/SceneBase"/>
+						<entry excluding="ServerStateDisplay" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main/SceneManager/SceneBase/GameScene"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main/SceneManager/SceneBase/GameScene/ServerStateDisplay"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main/SceneManager/SceneBase/WaitScene"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main/SceneManager/SceneFactory"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -96,9 +101,14 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="ServerStateDisplay|Main" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
-						<entry excluding="ServerStateDisplay" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main/ServerStateDisplay"/>
+						<entry excluding="GameScene|WaitScene|SceneBase|SceneFactory|SceneManager|ServerStateDisplay|Main" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="SceneManager|ServerStateDisplay" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main"/>
+						<entry excluding="SceneBase|SceneFactory" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main/SceneManager"/>
+						<entry excluding="GameScene|WaitScene" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main/SceneManager/SceneBase"/>
+						<entry excluding="ServerStateDisplay" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main/SceneManager/SceneBase/GameScene"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main/SceneManager/SceneBase/GameScene/ServerStateDisplay"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main/SceneManager/SceneBase/WaitScene"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main/SceneManager/SceneFactory"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -125,4 +135,5 @@
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="refreshScope"/>
+	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 </cproject>
