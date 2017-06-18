@@ -8,6 +8,14 @@
 #ifndef WAITSCENE_H_
 #define WAITSCENE_H_
 #include "../SceneBase.h"
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <string.h>
+#include <unistd.h>
+#include <vector>
+#include <thread>
 
 class WaitScene : public SceneBase
 {
@@ -17,7 +25,40 @@ public:
 
 	virtual SceneBase::SceneID Update();
 
-	virtual void Draw();
+private:
+	struct SendData
+	{
+		int32_t PlayerNum;
+		int32_t Id;
+		bool IsStart;
+	};
+
+	struct RecvData
+	{
+		int32_t Id;
+		bool IsOk;
+		bool IsMapLoad;
+	};
+
+	struct PlayerData
+	{
+		int32_t Id;
+		sockaddr_in Addr;
+		//in_addr Ip;
+		bool IsOk;
+	};
+
+	void RecvControl(int _socket);
+
+	std::thread 		  KeyControlThread;
+	std::vector<PlayerData> m_PlayerList;
+	RecvData			  m_RecvData;
+	SendData			  m_SendData;
+	int 	    		  m_Socket;
+	sockaddr_in 		  m_Addr;
+	fd_set  			  m_Fds, m_Readfds;
+	timeval 			  m_TimeOut;
+
 };
 
 #endif /* WAITSCENE_H_ */

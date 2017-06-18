@@ -8,6 +8,9 @@
 #ifndef SERVERSTATEDISPLAY_H_
 #define SERVERSTATEDISPLAY_H_
 #include <thread>
+#include "../GameScene.h"
+#include "../../../GameDataManager/GameDataManager.h"
+
 
 class ServerStateDisplay {
 public:
@@ -16,12 +19,9 @@ public:
 
 	void Loop();
 
-	inline void SetPlayerState(int32_t _id, float _posX, float _posY)
+	inline void SetPlayerData(GameScene::PlayerData* _playerData)
 	{
-		m_PlayerData.Id = _id;
-		m_PlayerData.PosX = _posX;
-		m_PlayerData.PosY = _posY;
-
+		m_pPlayerData = _playerData;
 	}
 private:
 	struct PlayerData
@@ -30,8 +30,8 @@ private:
 		float PosX,PosY;
 	};
 
+	GameScene::PlayerData* m_pPlayerData;
 	std::thread* m_pThread;
-	PlayerData   m_PlayerData;
 	bool		 m_IsEnd;
 };
 

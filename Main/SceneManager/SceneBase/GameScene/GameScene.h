@@ -8,13 +8,15 @@
 #ifndef GAMESCENE_H_
 #define GAMESCENE_H_
 #include "../SceneBase.h"
-#include "ServerStateDisplay/ServerStateDisplay.h"
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <string.h>
 #include <unistd.h>
+#include <thread>
+
+class ServerStateDisplay;
 
 class GameScene : public SceneBase
 {
@@ -43,10 +45,6 @@ public:
 		float	RectX, RectY;
 	};
 
-	struct SendData
-	{
-		PlayerData playerData;
-	};
 
 	struct RecvData
 	{
@@ -59,16 +57,14 @@ public:
 
 	SceneBase::SceneID Update() override;
 
-	void Draw() override;
+	void ConnectLoop();
 
 private:
-	SendData    		m_SendData;
+	PlayerData* 		m_pPlayerData;
 	RecvData    		m_RecvData;
-	int 	    		m_Socket;
-	sockaddr_in 		m_Addr;
-	fd_set  			m_Fds, m_Readfds;
-	timeval 			m_TimeOut;
 	ServerStateDisplay* m_pServerStateDisplay;
+	std::thread*		m_pUdpThread;
+	bool				m_IsThreadEnd;
 
 
 };

@@ -14,10 +14,8 @@
 ServerStateDisplay::ServerStateDisplay()
 {
 	m_IsEnd = false;
-	m_PlayerData.Id = 0;
-	m_PlayerData.PosX = 0;
-	m_PlayerData.PosY= 0;
 	m_pThread = new std::thread(&ServerStateDisplay::Loop,this);
+	m_pPlayerData = nullptr;
 }
 
 ServerStateDisplay::~ServerStateDisplay()
@@ -37,8 +35,12 @@ void ServerStateDisplay::Loop()
 		printf("| PlayerData |\n");
 		printf("+------------+\n");
 
-		printf(" ID = %d \n",m_PlayerData.Id);
-		printf("  X = %f \n", m_PlayerData.PosX);
-		printf("  Y = %f \n", m_PlayerData.PosY);
+		int playerNum = GameDataManager::GetInstance()->GetPlayerNum();
+		for(int i = 0; i < playerNum;i++)
+		{
+			printf(" ID = %d \n", m_pPlayerData[i].Id);
+			printf("  X = %f \n", m_pPlayerData[i].PosX);
+			printf("  Y = %f \n\n", m_pPlayerData[i].PosY);
+		}
 	}
 }

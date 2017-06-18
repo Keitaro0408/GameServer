@@ -11,7 +11,7 @@
 SceneManager::SceneManager() :
 m_pScene(nullptr),
 m_State(SCENE_CREATE),
-m_NextSceneID(SceneBase::SCENE_GAME),
+m_NextSceneID(SceneBase::SCENE_WAIT),
 m_IsGameEnd(false)
 {
 }
@@ -29,7 +29,6 @@ SceneManager::~SceneManager()
 bool SceneManager::Run()
 {
 	Update();
-	Draw();
 	return m_IsGameEnd;
 }
 
@@ -66,13 +65,5 @@ void SceneManager::Update()
 
 		m_State = SCENE_CREATE;
 		break;
-	}
-}
-
-void SceneManager::Draw()
-{
-	if (m_State == SCENE_PROC)
-	{
-		m_pScene->Draw();
 	}
 }

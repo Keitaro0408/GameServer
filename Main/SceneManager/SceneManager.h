@@ -7,8 +7,9 @@
 
 #ifndef SCENEMANAGER_H_
 #define SCENEMANAGER_H_
-#include "SceneBase/SceneBase.h"
 #include "SceneFactory/SceneFactory.h"
+#include "SceneBase/SceneBase.h"
+
 
 class SceneManager {
 public:
@@ -36,11 +37,6 @@ private:
 	 * 更新関数
 	 */
 	void Update();
-
-	/**
-	 * 描画関数
-	 */
-	void Draw();
 
 	SceneBase*			m_pScene;
 	State				m_State;

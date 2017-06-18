@@ -27,8 +27,6 @@ public:
 
 	virtual SceneID Update() = 0;
 
-	virtual void Draw() = 0;
-
 	inline SceneID GetSceneID() const
 	{
 		return m_SceneID;

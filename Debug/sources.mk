@@ -24,6 +24,7 @@ CPP_DEPS :=
 # Every subdirectory with source files must be described here
 SUBDIRS := \
 Main \
+Main/SceneManager/GameDataManager \
 Main/SceneManager/SceneBase/GameScene \
 Main/SceneManager/SceneBase/GameScene/ServerStateDisplay \
 Main/SceneManager/SceneBase/WaitScene \
