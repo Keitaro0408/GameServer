@@ -26,6 +26,7 @@ SUBDIRS := \
 Main \
 Main/SceneManager/GameDataManager \
 Main/SceneManager/SceneBase/GameScene \
+Main/SceneManager/SceneBase/GameScene/Map \
 Main/SceneManager/SceneBase/GameScene/ServerStateDisplay \
 Main/SceneManager/SceneBase/WaitScene \
 Main/SceneManager/SceneFactory \

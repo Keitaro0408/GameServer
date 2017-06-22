@@ -19,7 +19,7 @@ public:
 
 	void Loop();
 
-	inline void SetPlayerData(GameScene::PlayerData* _playerData)
+	inline void SetPlayerData(GameScene::SendData* _playerData)
 	{
 		m_pPlayerData = _playerData;
 	}
@@ -30,7 +30,7 @@ private:
 		float PosX,PosY;
 	};
 
-	GameScene::PlayerData* m_pPlayerData;
+	GameScene::SendData* m_pPlayerData;
 	std::thread* m_pThread;
 	bool		 m_IsEnd;
 };

@@ -11,6 +11,7 @@ RM := rm -rf
 -include Main/SceneManager/SceneFactory/subdir.mk
 -include Main/SceneManager/SceneBase/WaitScene/subdir.mk
 -include Main/SceneManager/SceneBase/GameScene/ServerStateDisplay/subdir.mk
+-include Main/SceneManager/SceneBase/GameScene/Map/subdir.mk
 -include Main/SceneManager/SceneBase/GameScene/subdir.mk
 -include Main/SceneManager/GameDataManager/subdir.mk
 -include Main/SceneManager/subdir.mk

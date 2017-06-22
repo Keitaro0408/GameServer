@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <sys/time.h>
 #include <unistd.h>
+#include <cstdlib>
 
 unsigned int timeGetTime()
 {
@@ -13,6 +14,7 @@ unsigned int timeGetTime()
 
 int main()
 {
+	std::system("clear");
 	printf("ServerBoot:\n");
 	SceneManager* sceneMnager = new SceneManager();
 

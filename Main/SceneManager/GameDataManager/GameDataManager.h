@@ -8,9 +8,19 @@
 #ifndef GAMEDATAMANAGER_H_
 #define GAMEDATAMANAGER_H_
 #include <thread>
+#include <netinet/in.h>
+#include <vector>
+
 
 class GameDataManager {
 public:
+	struct PlayerData
+	{
+		int32_t Id;
+		sockaddr_in Addr;
+		bool IsOk;
+	};
+
 	static GameDataManager* GetInstance()
 	{
 		static GameDataManager instance;
@@ -37,6 +47,16 @@ public:
 		return m_PlayerNum;
 	}
 
+	inline void SetPlayerData(const std::vector<PlayerData>& _playerData)
+	{
+		m_PlayerList = _playerData;
+	}
+
+	inline std::vector<PlayerData> GetPlayerData()
+	{
+		return m_PlayerList;
+	}
+
 
 private:
 	GameDataManager();
@@ -44,6 +64,8 @@ private:
 
 	int32_t m_Id;
 	int		m_PlayerNum;
+	std::vector<PlayerData> m_PlayerList;
+
 };
 
 #endif /* GAMEDATAMANAGER_H_ */

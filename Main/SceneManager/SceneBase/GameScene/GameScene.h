@@ -15,8 +15,13 @@
 #include <string.h>
 #include <unistd.h>
 #include <thread>
+#include <vector>
+
+#define JUMP_POWER -20.f
+#define GRAVITY 0.6f
 
 class ServerStateDisplay;
+class Map;
 
 class GameScene : public SceneBase
 {
@@ -35,14 +40,15 @@ public:
 		KEY_UP,
 		KEY_RIGHT,
 		KEY_DOWN,
+		KEY_ATTACK,
 		KEY_MAX
 	};
 
-	struct PlayerData
+	struct SendData
 	{
 		int32_t	Id;
 		float	PosX, PosY;
-		float	RectX, RectY;
+		bool 	IsRight;
 	};
 
 
@@ -52,6 +58,8 @@ public:
 		KEYSTATE KeyCommand[KEY_MAX];
 	};
 
+
+
 	GameScene();
 	virtual ~GameScene();
 
@@ -60,8 +68,20 @@ public:
 	void ConnectLoop();
 
 private:
-	PlayerData* 		m_pPlayerData;
+	struct PlayerState
+	{
+		bool IsJump;
+		float JumpAcceleration;
+		float RectCollisionX;
+		float RectCollisionY;
+	};
+
+	void CollisionCheck(SendData* _playerData);
+
+	SendData* 			m_pPlayerData;
+	std::vector<PlayerState> m_PlayerState;
 	RecvData    		m_RecvData;
+	Map*				m_pMap;
 	ServerStateDisplay* m_pServerStateDisplay;
 	std::thread*		m_pUdpThread;
 	bool				m_IsThreadEnd;

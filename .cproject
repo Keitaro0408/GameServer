@@ -46,12 +46,13 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="GameDataManager|GameScene|WaitScene|SceneBase|SceneFactory|SceneManager|ServerStateDisplay|Main" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="Map|GameDataManager|GameScene|WaitScene|SceneBase|SceneFactory|SceneManager|ServerStateDisplay|Main" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 						<entry excluding="SceneManager|ServerStateDisplay" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main"/>
 						<entry excluding="GameDataManager|SceneBase|SceneFactory" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main/SceneManager"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main/SceneManager/GameDataManager"/>
 						<entry excluding="GameScene|WaitScene" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main/SceneManager/SceneBase"/>
-						<entry excluding="ServerStateDisplay" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main/SceneManager/SceneBase/GameScene"/>
+						<entry excluding="Map|ServerStateDisplay" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main/SceneManager/SceneBase/GameScene"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main/SceneManager/SceneBase/GameScene/Map"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main/SceneManager/SceneBase/GameScene/ServerStateDisplay"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main/SceneManager/SceneBase/WaitScene"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main/SceneManager/SceneFactory"/>
@@ -102,12 +103,13 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="GameDataManager|GameScene|WaitScene|SceneBase|SceneFactory|SceneManager|ServerStateDisplay|Main" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="Map|GameDataManager|GameScene|WaitScene|SceneBase|SceneFactory|SceneManager|ServerStateDisplay|Main" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 						<entry excluding="SceneManager|ServerStateDisplay" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main"/>
 						<entry excluding="GameDataManager|SceneBase|SceneFactory" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main/SceneManager"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main/SceneManager/GameDataManager"/>
 						<entry excluding="GameScene|WaitScene" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main/SceneManager/SceneBase"/>
-						<entry excluding="ServerStateDisplay" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main/SceneManager/SceneBase/GameScene"/>
+						<entry excluding="Map|ServerStateDisplay" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main/SceneManager/SceneBase/GameScene"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main/SceneManager/SceneBase/GameScene/Map"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main/SceneManager/SceneBase/GameScene/ServerStateDisplay"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main/SceneManager/SceneBase/WaitScene"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main/SceneManager/SceneFactory"/>

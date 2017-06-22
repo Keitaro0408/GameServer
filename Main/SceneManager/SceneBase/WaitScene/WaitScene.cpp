@@ -8,7 +8,6 @@
 #include "WaitScene.h"
 #include <cstdlib>
 #include <arpa/inet.h>
-#include "../../GameDataManager/GameDataManager.h"
 
 
 WaitScene::WaitScene():
@@ -69,7 +68,6 @@ void WaitScene::RecvControl(int _socket)
 		{
 			if(m_PlayerList[i].Id == m_RecvData.Id)
 			{
-				printf("%d Ready", m_RecvData.Id);
 				m_PlayerList[i].IsOk = m_RecvData.IsOk;
 				break;
 			}
@@ -80,33 +78,41 @@ void WaitScene::RecvControl(int _socket)
 	recvfrom(_socket, reinterpret_cast<char*>(&m_RecvData), sizeof(RecvData), 0, (sockaddr*)&m_Addr, &addr_len);
 	if(m_PlayerList.size() == 0)
 	{
-		PlayerData playerData;
+		GameDataManager::PlayerData playerData;
 		playerData.IsOk = false;
 		playerData.Addr = m_Addr;
 		playerData.Id = 1;
 		m_PlayerList.push_back(playerData);
-		printf("join from : %s\n",inet_ntoa(m_Addr.sin_addr));
-		printf("       Id : %d\n\n",playerData.Id);
 	}
 	else
 	{
 		if(m_RecvData.Id == 0)
 		{
-			PlayerData playerData;
+			GameDataManager::PlayerData playerData;
 			playerData.IsOk = false;
 			playerData.Id = m_PlayerList.size() + 1;
 			playerData.Addr = m_Addr;
 			m_PlayerList.push_back(playerData);
-			printf("join from : %s\n",inet_ntoa(m_Addr.sin_addr));
-			printf("       Id : %d\n\n",playerData.Id);
 		}
 	}
 
 
 	SetIsOk();
+	std::system("clear");
 
 	for(unsigned int i = 0; i < m_PlayerList.size();i++)
 	{
+		printf("join from : %s\n",inet_ntoa(m_PlayerList[i].Addr.sin_addr));
+		printf("       Id : %d\n",m_PlayerList[i].Id);
+		if(m_PlayerList[i].IsOk)
+		{
+			printf("     IsOk : true\n\n");
+		}
+		else
+		{
+			printf("     IsOk : false\n\n");
+		}
+
 		m_SendData.Id = m_PlayerList[i].Id;
 		m_Addr = m_PlayerList[i].Addr;
 		m_SendData.IsStart = false;
@@ -122,6 +128,7 @@ void WaitScene::RecvControl(int _socket)
 
 	if(CheckIsStart())
 	{
+		GameDataManager::GetInstance()->SetPlayerData(m_PlayerList);
 		GameDataManager::GetInstance()->SetPlayerNum(m_PlayerList.size());
 		m_SceneID = SceneBase::SCENE_GAME;
 	}

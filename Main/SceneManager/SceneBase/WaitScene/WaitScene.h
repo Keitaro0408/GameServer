@@ -16,6 +16,8 @@
 #include <unistd.h>
 #include <vector>
 #include <thread>
+#include "../../GameDataManager/GameDataManager.h"
+
 
 class WaitScene : public SceneBase
 {
@@ -40,18 +42,10 @@ private:
 		bool IsMapLoad;
 	};
 
-	struct PlayerData
-	{
-		int32_t Id;
-		sockaddr_in Addr;
-		//in_addr Ip;
-		bool IsOk;
-	};
-
 	void RecvControl(int _socket);
 
 	std::thread 		  KeyControlThread;
-	std::vector<PlayerData> m_PlayerList;
+	std::vector<GameDataManager::PlayerData> m_PlayerList;
 	RecvData			  m_RecvData;
 	SendData			  m_SendData;
 	int 	    		  m_Socket;
