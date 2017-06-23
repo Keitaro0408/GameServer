@@ -39,14 +39,20 @@ public:
 		KEY_LEFT,
 		KEY_UP,
 		KEY_RIGHT,
-		KEY_DOWN,
-		KEY_ATTACK,
+		KEY_FIRE,
 		KEY_MAX
+	};
+
+	struct BulletData
+	{
+		float	PosX, PosY;
+		bool 	IsRight,IsEnable;
 	};
 
 	struct SendData
 	{
 		int32_t	Id;
+		BulletData bulletData[3];
 		float	PosX, PosY;
 		bool 	IsRight;
 	};
@@ -76,7 +82,9 @@ private:
 		float RectCollisionY;
 	};
 
-	void CollisionCheck(SendData* _playerData);
+	void RecvControl();
+	void PlayerCollisionCheck();
+	void BulletControl();
 
 	SendData* 			m_pPlayerData;
 	std::vector<PlayerState> m_PlayerState;

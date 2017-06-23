@@ -25,6 +25,13 @@ m_IsThreadEnd(false)
 		m_pPlayerData[i].PosX = 300.f;
 		m_pPlayerData[i].PosY = 300.f;
 		m_pPlayerData[i].IsRight = true;
+		for(int j = 0; j < 3; j++)
+		{
+			m_pPlayerData[i].bulletData[j].IsEnable = false;
+			m_pPlayerData[i].bulletData[j].IsRight = false;
+			m_pPlayerData[i].bulletData[j].PosX = 0.f;
+			m_pPlayerData[i].bulletData[j].PosY = 0.f;
+		}
 		PlayerState playerState;
 		playerState.IsJump = false;
 		playerState.JumpAcceleration = 0.f;
@@ -54,56 +61,8 @@ GameScene::~GameScene()
 
 SceneBase::SceneID GameScene::Update()
 {
-	int playerNum = GameDataManager::GetInstance()->GetPlayerNum();
-
-	for(int i = 0;i < playerNum;i++)
-	{
-		int underPlayerMapChipNumX = m_pPlayerData[i].PosX / CHIP_WIDTH;
-		int underPlayerMapChipNumY = (m_pPlayerData[i].PosY + 20.f) / CHIP_WIDTH;
-
-		int bottomPlayerMapChipNumX = m_pPlayerData[i].PosX / CHIP_WIDTH;
-		int bottomPlayerMapChipNumY = (m_pPlayerData[i].PosY - 20.f) / CHIP_WIDTH;
-
-		if(underPlayerMapChipNumX > MAP_WIDTH ||
-				underPlayerMapChipNumY > MAP_HEIGHT )
-		{
-			m_pPlayerData[i].PosY = 200.f;
-			m_pPlayerData[i].PosX = 600.f;
-			m_PlayerState[i].JumpAcceleration = 0;
-		}
-		else
-		{
-			if(m_PlayerState[i].IsJump)
-			{
-				m_pPlayerData[i].PosY += m_PlayerState[i].JumpAcceleration;
-				m_PlayerState[i].JumpAcceleration += GRAVITY;
-
-				underPlayerMapChipNumX = m_pPlayerData[i].PosX / CHIP_WIDTH;
-				underPlayerMapChipNumY = (m_pPlayerData[i].PosY + 20.f) / CHIP_WIDTH;
-
-				bottomPlayerMapChipNumX = m_pPlayerData[i].PosX / CHIP_WIDTH;
-				bottomPlayerMapChipNumY = (m_pPlayerData[i].PosY - 20.f) / CHIP_WIDTH;
-
-				if(m_pMap->GetMapData().Data[bottomPlayerMapChipNumY][bottomPlayerMapChipNumX] == 1)
-				{
-					m_pPlayerData[i].PosY += (m_pPlayerData[i].PosY - 20.f) - (bottomPlayerMapChipNumY * 32 + 16);
-					m_PlayerState[i].JumpAcceleration = 0;
-				}
-
-				if(m_pMap->GetMapData().Data[underPlayerMapChipNumY][underPlayerMapChipNumX] == 1)
-				{
-					m_pPlayerData[i].PosY -= (m_pPlayerData[i].PosY + 20.f) - (underPlayerMapChipNumY * 32 - 16);
-					m_PlayerState[i].IsJump = false;
-					m_PlayerState[i].JumpAcceleration = 0;
-				}
-			}
-			else if(m_pMap->GetMapData().Data[underPlayerMapChipNumY+1][underPlayerMapChipNumX] == 0)
-			{
-				m_PlayerState[i].IsJump = true;
-			}
-		}
-	}
-
+	PlayerCollisionCheck();
+	BulletControl();
 	return m_SceneID;
 }
 
@@ -150,6 +109,7 @@ void GameScene::ConnectLoop()
 						m_pPlayerData[m_RecvData.PlayerId-1].PosX += 2.5f;
 					}
 				}
+
 				if (m_RecvData.KeyCommand[KEY_RIGHT] == KEY_ON)
 				{
 					m_pPlayerData[m_RecvData.PlayerId-1].IsRight = true;
@@ -161,13 +121,31 @@ void GameScene::ConnectLoop()
 						m_pPlayerData[m_RecvData.PlayerId-1].PosX -= 2.5f;
 					}
 				}
+
+				if(m_RecvData.KeyCommand[KEY_FIRE] == KEY_PUSH )
+				{
+					printf("push Fire\n");
+					for(int i = 0;i < 3; i++)
+					{
+						if(!m_pPlayerData[m_RecvData.PlayerId-1].bulletData[i].IsEnable)
+						{
+							m_pPlayerData[m_RecvData.PlayerId-1].bulletData[i].IsEnable = true;
+							m_pPlayerData[m_RecvData.PlayerId-1].bulletData[i].IsRight = m_pPlayerData[m_RecvData.PlayerId-1].IsRight;
+							m_pPlayerData[m_RecvData.PlayerId-1].bulletData[i].PosX = m_pPlayerData[m_RecvData.PlayerId-1].PosX;
+							m_pPlayerData[m_RecvData.PlayerId-1].bulletData[i].PosY = m_pPlayerData[m_RecvData.PlayerId-1].PosY;
+							break;
+						}
+					}
+				}
 				if (m_RecvData.KeyCommand[KEY_UP] == KEY_PUSH && !m_PlayerState[m_RecvData.PlayerId-1].IsJump)
 				{
 					m_PlayerState[m_RecvData.PlayerId-1].IsJump = true;
 					m_PlayerState[m_RecvData.PlayerId-1].JumpAcceleration = JUMP_POWER;
 				}
-				if (m_RecvData.KeyCommand[KEY_DOWN] == KEY_ON)
+				else if(m_RecvData.KeyCommand[KEY_UP] == KEY_ON &&
+						m_PlayerState[m_RecvData.PlayerId-1].JumpAcceleration > 0.f)
 				{
+					m_PlayerState[m_RecvData.PlayerId-1].JumpAcceleration = 0.f;
 				}
 			}
 			sendto(sock, reinterpret_cast<char*>(m_pPlayerData), sizeof(SendData)*playerNum, 0, (struct sockaddr *)&addr, sizeof(addr));
@@ -176,7 +154,102 @@ void GameScene::ConnectLoop()
 	close(sock);
 }
 
-void GameScene::CollisionCheck(SendData* _playerData)
+void GameScene::RecvControl()
 {
+
+}
+
+void GameScene::PlayerCollisionCheck()
+{
+	int playerNum = GameDataManager::GetInstance()->GetPlayerNum();
+
+	for(int i = 0;i < playerNum;i++)
+	{
+		int underPlayerMapChipNumX = m_pPlayerData[i].PosX / CHIP_WIDTH;
+		int underPlayerMapChipNumY = (m_pPlayerData[i].PosY + 20.f) / CHIP_WIDTH;
+
+		int bottomPlayerMapChipNumX = m_pPlayerData[i].PosX / CHIP_WIDTH;
+		int bottomPlayerMapChipNumY = (m_pPlayerData[i].PosY - 20.f) / CHIP_WIDTH;
+
+		if(underPlayerMapChipNumX > MAP_WIDTH ||
+				underPlayerMapChipNumY > MAP_HEIGHT )
+		{
+			m_pPlayerData[i].PosY = 200.f;
+			m_pPlayerData[i].PosX = 600.f;
+			m_PlayerState[i].JumpAcceleration = 0;
+		}
+		else
+		{
+			if(m_PlayerState[i].IsJump)
+			{
+				m_PlayerState[i].JumpAcceleration += GRAVITY;
+				m_pPlayerData[i].PosY += m_PlayerState[i].JumpAcceleration;
+
+				underPlayerMapChipNumX = m_pPlayerData[i].PosX / CHIP_WIDTH;
+				underPlayerMapChipNumY = (m_pPlayerData[i].PosY + 20.f) / CHIP_WIDTH;
+
+				bottomPlayerMapChipNumX = m_pPlayerData[i].PosX / CHIP_WIDTH;
+				bottomPlayerMapChipNumY = (m_pPlayerData[i].PosY - 20.f) / CHIP_WIDTH;
+
+				if(m_pMap->GetMapData().Data[bottomPlayerMapChipNumY][bottomPlayerMapChipNumX] == 1)
+				{
+					m_pPlayerData[i].PosY += (m_pPlayerData[i].PosY - 20.f) - (bottomPlayerMapChipNumY * 32 + 16);
+					m_PlayerState[i].JumpAcceleration = 0;
+				}
+
+				if(m_pMap->GetMapData().Data[underPlayerMapChipNumY][underPlayerMapChipNumX] == 1)
+				{
+					m_pPlayerData[i].PosY -= (m_pPlayerData[i].PosY + 20.f) - (underPlayerMapChipNumY * 32 - 16);
+					m_PlayerState[i].IsJump = false;
+					m_PlayerState[i].JumpAcceleration = 0;
+				}
+			}
+			else if(m_pMap->GetMapData().Data[underPlayerMapChipNumY+1][underPlayerMapChipNumX] == 0)
+			{
+				m_PlayerState[i].IsJump = true;
+			}
+		}
+	}
+}
+
+void GameScene::BulletControl()
+{
+	auto EnableControl = [&](SendData& _sendData,int _bulletArray)
+	{
+		if(_sendData.bulletData[_bulletArray].IsRight)
+		{
+			_sendData.bulletData[_bulletArray].PosX += 5.f;
+		}
+		else
+		{
+			_sendData.bulletData[_bulletArray].PosX -= 5.f;
+		}
+		int bulletMapChipNumX = _sendData.bulletData[_bulletArray].PosX / CHIP_WIDTH;
+		int bulletMapChipNumY = _sendData.bulletData[_bulletArray].PosY / CHIP_WIDTH;
+		if(bulletMapChipNumX > MAP_WIDTH ||
+		   bulletMapChipNumY > MAP_HEIGHT ||
+		   bulletMapChipNumX <= 0 ||
+		   bulletMapChipNumY <= 0)
+		{
+			_sendData.bulletData[_bulletArray].IsEnable = false;
+		}
+		else if(m_pMap->GetMapData().Data[bulletMapChipNumY][bulletMapChipNumX] == 1)
+		{
+			_sendData.bulletData[_bulletArray].IsEnable = false;
+		}
+	};
+
+	int playerNum = GameDataManager::GetInstance()->GetPlayerNum();
+	for(int i = 0; i < playerNum; i++)
+	{
+		for(int j = 0; j < 3;j++)
+		{
+			if(m_pPlayerData[i].bulletData[j].IsEnable)
+			{
+				EnableControl(m_pPlayerData[i],j);
+			}
+		}
+	}
+
 
 }
