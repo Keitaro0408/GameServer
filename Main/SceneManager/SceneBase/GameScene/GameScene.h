@@ -19,6 +19,7 @@
 
 #define JUMP_POWER -20.f
 #define GRAVITY 0.6f
+#define BULLET_SPEED 15.f
 
 class ServerStateDisplay;
 class Map;
@@ -78,8 +79,8 @@ private:
 	{
 		bool IsJump;
 		float JumpAcceleration;
-		float RectCollisionX;
-		float RectCollisionY;
+		float InpactForceX;
+		float InpactForceY;
 	};
 
 	void RecvControl();
