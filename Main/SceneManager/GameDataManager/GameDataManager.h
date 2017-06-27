@@ -16,7 +16,7 @@ class GameDataManager {
 public:
 	struct PlayerData
 	{
-		int32_t Id;
+		unsigned char Id;
 		sockaddr_in Addr;
 		bool IsOk;
 	};
@@ -27,12 +27,12 @@ public:
 		return &instance;
 	}
 
-	inline void SetId(int32_t _id)
+	inline void SetId(unsigned char _id)
 	{
 		m_Id = _id;
 	}
 
-	inline int32_t GetId()
+	inline unsigned char GetId()
 	{
 		return m_Id;
 	}
@@ -62,7 +62,7 @@ private:
 	GameDataManager();
 	virtual ~GameDataManager();
 
-	int32_t m_Id;
+	unsigned char m_Id;
 	int		m_PlayerNum;
 	std::vector<PlayerData> m_PlayerList;
 

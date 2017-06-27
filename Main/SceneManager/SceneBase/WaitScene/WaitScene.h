@@ -31,13 +31,13 @@ private:
 	struct SendData
 	{
 		int32_t PlayerNum;
-		int32_t Id;
+		unsigned char Id;
 		bool IsStart;
 	};
 
 	struct RecvData
 	{
-		int32_t Id;
+		unsigned char Id;
 		bool IsOk;
 		bool IsMapLoad;
 	};
