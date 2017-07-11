@@ -211,7 +211,7 @@ void GameScene::PlayerCollisionCheck()
 
 		if(underPlayerMapChipNumX > MAP_WIDTH ||
 				underPlayerMapChipNumY > MAP_HEIGHT ||
-				underPlayerMapChipNumX <= 0)
+				underPlayerMapChipNumX < 0)
 		{
 			m_pPlayerData[i].PosY = 200.f;
 			m_pPlayerData[i].PosX = 600.f;
@@ -228,6 +228,12 @@ void GameScene::PlayerCollisionCheck()
 
 				underPlayerMapChipNumX = m_pPlayerData[i].PosX / CHIP_WIDTH;
 				underPlayerMapChipNumY = (m_pPlayerData[i].PosY + 20.f) / CHIP_WIDTH;
+
+				/* マイナスの要素数を参照しないように調整 */
+				if(underPlayerMapChipNumY < 0)
+				{
+					underPlayerMapChipNumY = 0;
+				}
 
 				bottomPlayerMapChipNumX = m_pPlayerData[i].PosX / CHIP_WIDTH;
 				bottomPlayerMapChipNumY = (m_pPlayerData[i].PosY - 20.f) / CHIP_WIDTH;
