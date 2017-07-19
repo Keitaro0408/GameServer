@@ -10,6 +10,7 @@
 #include <thread>
 #include <netinet/in.h>
 #include <vector>
+#define PORT 50000
 
 
 class GameDataManager {

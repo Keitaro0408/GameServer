@@ -101,6 +101,10 @@ void GameScene::ConnectLoop()
 				recvfrom(sock, reinterpret_cast<char*>(&m_RecvData), sizeof(RecvData), 0, (sockaddr*)&addr, &addr_len);
 				if(m_RecvData.PlayerId <= playerNum)
 				{
+					std::vector<GameDataManager::PlayerData> playerList = GameDataManager::GetInstance()->GetPlayerData();
+					playerList[m_RecvData.PlayerId-1].Addr = addr;
+					GameDataManager::GetInstance()->SetPlayerData(playerList);
+
 					m_pPlayerData[m_RecvData.PlayerId-1].Id = m_RecvData.PlayerId;
 					if (m_RecvData.KeyCommand[KEY_LEFT] == KEY_ON)
 					{
@@ -167,7 +171,6 @@ void GameScene::ConnectLoop()
 
 	std::thread SendThread([&]()
 	{
-		std::vector<GameDataManager::PlayerData> playerList = GameDataManager::GetInstance()->GetPlayerData();
 		unsigned int SyncOld = timeGetTime();	//	システム時間を取得
 		unsigned int SyncNow;
 		while (!m_IsThreadEnd)
@@ -176,6 +179,7 @@ void GameScene::ConnectLoop()
 			SyncNow = timeGetTime();
 			if (SyncNow - SyncOld >= 1000 / 60)
 			{
+				std::vector<GameDataManager::PlayerData> playerList = GameDataManager::GetInstance()->GetPlayerData();
 				for (int i = 0; i < playerNum; i++)
 				{
 					sendto(sock, reinterpret_cast<char*>(m_pPlayerData), sizeof(SendData)*playerNum, 0, (struct sockaddr *)&playerList[i].Addr, sizeof(playerList[i].Addr));

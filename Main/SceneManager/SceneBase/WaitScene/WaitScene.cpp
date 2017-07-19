@@ -17,7 +17,7 @@ SceneBase(SceneBase::SCENE_WAIT)
 	m_Socket = socket(AF_INET, SOCK_DGRAM, 0);
 
 	m_Addr.sin_family = AF_INET;
-	m_Addr.sin_port = htons(50000);
+	m_Addr.sin_port = htons(PORT);
 	m_Addr.sin_addr.s_addr = INADDR_ANY;
 
 	bind(m_Socket, (sockaddr *)&m_Addr, sizeof(m_Addr));
